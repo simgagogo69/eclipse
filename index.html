@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECLIPSE: Protocol Zero</title>
+    <style>
+        /* Base Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        /* =========================================
+           SERIOUS TITLE SCREEN STYLES
+           ========================================= */
+        #serious-screen {
+            height: 100%;
+            width: 100%;
+            background: radial-gradient(circle at center, #1a1a24 0%, #050508 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #e0e0e0;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .game-title {
+            font-size: 5rem;
+            font-weight: 300;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 0 0 20px rgba(100, 150, 255, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #6a7b9c;
+            letter-spacing: 4px;
+            margin-top: 10px;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .start-btn {
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            background: transparent;
+            color: #fff;
+            border: 1px solid #4a5c7c;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn:hover {
+            background: rgba(100, 150, 255, 0.1);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.4);
+            text-shadow: 0 0 5px #fff;
+        }
+
+        .version-text {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-family: monospace;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        /* =========================================
+           APRIL FOOLS JOKE SCREEN STYLES
+           ========================================= */
+        #joke-screen {
+            display: none; /* Hidden until clicked */
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* Eye-bleeding strobe effect */
+            animation: strobe 0.1s infinite; 
+            overflow: hidden;
+        }
+
+        @keyframes strobe {
+            0% { background-color: #ff0000; }
+            20% { background-color: #00ff00; }
+            40% { background-color: #0000ff; }
+            60% { background-color: #ffff00; }
+            80% { background-color: #ff00ff; }
+            100% { background-color: #00ffff; }
+        }
+
+        .fool-text {
+            font-size: 15vw;
+            font-weight: 900;
+            color: #fff;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', Comic Sans, sans-serif;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1;
+            margin: 0;
+            /* Aggressive drop shadow */
+            text-shadow: 10px 10px 0px #000, -5px -5px 0px #fff;
+            /* Violent shaking animation */
+            animation: shake 0.15s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(5px, 5px) rotate(0deg) scale(1); }
+            10% { transform: translate(-5px, -10px) rotate(-5deg) scale(1.2); }
+            20% { transform: translate(-15px, 0px) rotate(5deg) scale(0.8); }
+            30% { transform: translate(0px, 10px) rotate(0deg) scale(1.3); }
+            40% { transform: translate(5px, -5px) rotate(5deg) scale(0.9); }
+            50% { transform: translate(-5px, 10px) rotate(-2deg) scale(1.1); }
+            60% { transform: translate(-15px, 5px) rotate(0deg) scale(1); }
+            70% { transform: translate(10px, 5px) rotate(-5deg) scale(1.4); }
+            80% { transform: translate(-5px, -5px) rotate(5deg) scale(0.8); }
+            90% { transform: translate(10px, 10px) rotate(0deg) scale(1.2); }
+            100% { transform: translate(5px, -10px) rotate(-2deg) scale(1); }
+        }
+
+        .sub-fool {
+            font-size: 4rem;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            color: #000;
+            background: #fff;
+            padding: 10px 30px;
+            margin-top: 30px;
+            border-radius: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="serious-screen">
+        <h1 class="game-title">ECLIPSE</h1>
+        <div class="subtitle">A Simga Game</div>
+        <button class="start-btn" id="startBtn">Begin Campaign</button>
+        <div class="version-text">v. 1.0.4.2 | Early Access</div>
+    </div>
+
+    <div id="joke-screen">
+        <div class="fool-text">APRIL<br>FOOLS!</div>
+        <div class="sub-fool">STUPID NIGGER</div>
+    </div>
+
+    <script>
+        // Get the button and the screens
+        const startBtn = document.getElementById('startBtn');
+        const seriousScreen = document.getElementById('serious-screen');
+        const jokeScreen = document.getElementById('joke-screen');
+
+        // Listen for the click
+        startBtn.addEventListener('click', () => {
+            // Hide the serious game screen
+            seriousScreen.style.display = 'none';
+            
+            // Show the blindingly chaotic April Fools screen
+            jokeScreen.style.display = 'flex';
+        });
+    </script>
+
+</body>
+</html>
